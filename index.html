@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Random User Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f5f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #1e3a8a;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 40px;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 300px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card img {
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      margin-bottom: 15px;
+    }
+
+    .card h2 {
+      margin: 10px 0 5px;
+      color: #1e3a8a;
+    }
+
+    .card p {
+      margin: 5px 0;
+      color: #555;
+    }
+
+    button {
+      background-color: #1e3a8a;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #3b82f6;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Random User Generator 👤</h1>
+  </header>
+
+  <main>
+    <div class="card" id="userCard">
+      <p>Click the button below to generate a random user.</p>
+    </div>
+
+    <button id="generateBtn">Generate User</button>
+  </main>
+
+  <script>
+    const generateBtn = document.getElementById('generateBtn');
+    const userCard = document.getElementById('userCard');
+
+    // Function to fetch a random user
+    async function generateUser() {
+      userCard.innerHTML = "<p>Loading...</p>";
+
+      try {
+        const response = await fetch("https://randomuser.me/api/");
+        const data = await response.json();
+        const user = data.results[0];
+
+        // Display user info
+        userCard.innerHTML = `
+          <img src="${user.picture.large}" alt="User Photo">
+          <h2>${user.name.title} ${user.name.first} ${user.name.last}</h2>
+          <p><strong>Gender:</strong> ${user.gender}</p>
+          <p><strong>Email:</strong> ${user.email}</p>
+          <p><strong>Country:</strong> ${user.location.country}</p>
+        `;
+      } catch (error) {
+        userCard.innerHTML = "<p>Failed to fetch user data. Try again!</p>";
+        console.error(error);
+      }
+    }
+
+    generateBtn.addEventListener('click', generateUser);
+  </script>
+</body>
+</html>
