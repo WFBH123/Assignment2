@@ -92,7 +92,7 @@
     const generateBtn = document.getElementById('generateBtn');
     const userCard = document.getElementById('userCard');
 
-    // Function to fetch a random user
+ 
     async function generateUser() {
       userCard.innerHTML = "<p>Loading...</p>";
 
@@ -100,8 +100,7 @@
         const response = await fetch("https://randomuser.me/api/");
         const data = await response.json();
         const user = data.results[0];
-
-        // Display user info
+ 
         userCard.innerHTML = `
           <img src="${user.picture.large}" alt="User Photo">
           <h2>${user.name.title} ${user.name.first} ${user.name.last}</h2>
@@ -119,3 +118,4 @@
   </script>
 </body>
 </html>
+
